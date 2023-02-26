@@ -3,6 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 
 const galleryContaner = document.querySelector(".gallery");
 const galaryCards = createGalaryCards(galleryItems);
+let modalImgBig;
 
 galleryContaner.insertAdjacentHTML("beforeend", galaryCards);
 
@@ -35,9 +36,20 @@ function conteinerGalaryClick(evt) {
 
   console.log(evt.target.dataset.source);
 
-  const modalImgBig = basicLightbox.create(`
+  modalImgBig = basicLightbox.create(`
     <img src="${evt.target.dataset.source}" width="800" height="600">
   `);
 
   modalImgBig.show();
+}
+
+window.addEventListener("keydown", onEscKeyPress);
+function onEscKeyPress(evt) {
+  if (evt.code !== "Escape") {
+    return;
+  }
+  {
+    modalImgBig.close();
+  }
+  window.removeEventListener("keydown", modalImgBig);
 }
